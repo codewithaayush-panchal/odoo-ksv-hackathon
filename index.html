@@ -929,64 +929,55 @@
         
         <div class="po-document-box">
           
-          <div class="po-header-section">
+          <div class="po-header-section" style="margin-bottom: 24px;">
             <div>
-              <h2 style="font-size:18px; font-weight:700;">PO #8842-VB-2023</h2>
-              <p style="font-size:12px; color:var(--text-secondary); margin-top:2px;">Created on Oct 24, 2023</p>
+              <h2 style="font-size:26px; font-weight:700; color:#1e293b; margin-bottom:4px;">Purchase Order &amp; Invoice</h2>
+              <p style="font-size:13.5px; color:#475569; margin-top:2px;">PO-2024-auto-generated after approval</p>
             </div>
             <div style="display:flex; gap:10px; align-items:center;">
-              <button class="btn-select" style="width:auto; font-size:12px; padding:6px 12px; display:inline-flex; align-items:center; gap:4px;">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <button class="btn-select" style="width:auto; font-size:12px; padding:8px 16px; display:inline-flex; align-items:center; gap:4px;">
                 Download PDF
               </button>
-              <button class="btn-select" style="width:auto; font-size:12px; padding:6px 12px; display:inline-flex; align-items:center; gap:4px;">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+              <button class="btn-select" style="width:auto; font-size:12px; padding:8px 16px; display:inline-flex; align-items:center; gap:4px;">
                 Print
               </button>
-              <button class="btn-select" style="width:auto; font-size:12px; padding:6px 12px; display:inline-flex; align-items:center; gap:4px;">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                Email Invoice
+              <button class="btn-select" style="width:auto; font-size:12px; padding:8px 16px; display:inline-flex; align-items:center; gap:4px;">
+                Email invoice
               </button>
             </div>
           </div>
 
-          <div class="po-address-grid">
+          <div class="po-address-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 20px; background: #ffffff; margin-bottom: 20px;">
             <div>
-              <div class="address-label">FROM: YOUR ORGANIZATION</div>
-              <div class="address-org">VendorBridge Logistics Corp.</div>
-              <p class="address-details">
-                451 Procurement Way, Suite 200<br>
-                Austin, TX 78701, USA<br>
-                Contact: logistics@vendorbridge.com
+              <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Bill to:</div>
+              <div style="font-size: 14.5px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">your Organization Name</div>
+              <p style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                123 business park, ahmedabad<br>
+                GSTIN: 25383438AFB
               </p>
             </div>
             <div>
-              <div class="address-label">TO: VENDOR DETAILS</div>
-              <div class="address-org" id="po-to-org">Summit Precision Electronics</div>
-              <p class="address-details" id="po-to-address">
-                1280 Industrial Park Drive<br>
-                San Jose, CA 95110, USA<br>
-                VAT ID: US88392011
+              <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Vendor</div>
+              <div id="po-to-org" style="font-size: 14.5px; font-weight: 700; color: #1e293b; margin-bottom: 6px;">Infra supplies pvt ltd</div>
+              <p id="po-to-address" style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                456, industrial estate, surat<br>
+                GSTIN: 343434DB4523
               </p>
             </div>
           </div>
 
-          <div class="po-meta-row">
-            <div class="po-meta-block">
-              <div class="po-meta-label">PO Date</div>
-              <div class="po-meta-value" id="po-meta-date">Oct 24, 2023</div>
+          <div class="po-meta-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px; background: #ffffff; margin-bottom: 24px;">
+            <div style="font-size: 13.5px; color: #1e293b;">
+              <span style="font-weight: 600;">PO Number:</span> <span id="po-meta-number" style="font-family: monospace;">PO-2025-0068</span>
             </div>
-            <div class="po-meta-block">
-              <div class="po-meta-label">Invoice Date</div>
-              <div class="po-meta-value" id="po-meta-inv-date">Oct 25, 2023</div>
+            <div style="font-size: 13.5px; color: #1e293b;">
+              <span style="font-weight: 600;">invoice date:</span> <span id="po-meta-inv-date">22 may 2025</span>
             </div>
-            <div class="po-meta-block">
-              <div class="po-meta-label">Due Date</div>
-              <div class="po-meta-value" id="po-meta-due-date">Nov 24, 2023</div>
+            <div style="font-size: 13.5px; color: #1e293b;">
+              <span style="font-weight: 600;">PO date:</span> <span id="po-meta-date">21 may, 2025</span>
             </div>
-            <div class="po-meta-block">
-              <div class="po-meta-label">Payment Terms</div>
-              <div class="po-meta-value" id="po-meta-terms">Net 30 Days</div>
+            <div style="font-size: 13.5px; color: #1e293b;">
+              <span style="font-weight: 600;">Due date:</span> <span id="po-meta-due-date">21 june 2025</span>
             </div>
           </div>
 
@@ -995,77 +986,24 @@
             <table class="vb-table">
               <thead>
                 <tr>
-                  <th style="padding:10px 12px; background-color:#f8fafc;">Item Description</th>
-                  <th style="padding:10px 12px; background-color:#f8fafc; text-align:center;">Qty</th>
-                  <th style="padding:10px 12px; background-color:#f8fafc; text-align:right;">Unit Price</th>
-                  <th style="padding:10px 12px; background-color:#f8fafc; text-align:right;">Total</th>
+                  <th style="padding:12px 16px; background-color:#f8fafc;">Item</th>
+                  <th style="padding:12px 16px; background-color:#f8fafc; text-align:center; width: 80px;">Qty</th>
+                  <th style="padding:12px 16px; background-color:#f8fafc; text-align:right; width: 120px;">Unit price</th>
+                  <th style="padding:12px 16px; background-color:#f8fafc; text-align:right; width: 150px;">Total</th>
                 </tr>
               </thead>
               <tbody id="po-items-tbody">
-                <tr>
-                  <td>
-                    <span style="font-weight:600; display:block;">Precision Control Board - V2</span>
-                    <span style="font-size:11px; color:var(--text-muted);">Part #SP-102-PCB</span>
-                  </td>
-                  <td style="text-align:center;">50</td>
-                  <td style="text-align:right;">$1,200.00</td>
-                  <td style="text-align:right; font-weight:600;">$60,000.00</td>
-                </tr>
-                <tr>
-                  <td>
-                    <span style="font-weight:600; display:block;">Industrial Capacitors (Bulk)</span>
-                    <span style="font-size:11px; color:var(--text-muted);">Part #CAP-400-IND</span>
-                  </td>
-                  <td style="text-align:center;">200</td>
-                  <td style="text-align:right;">$45.00</td>
-                  <td style="text-align:right; font-weight:600;">$9,000.00</td>
-                </tr>
-                <tr>
-                  <td>
-                    <span style="font-weight:600; display:block;">High-Temp Heat Sinks</span>
-                    <span style="font-size:11px; color:var(--text-muted);">Part #HS-TH-90</span>
-                  </td>
-                  <td style="text-align:center;">100</td>
-                  <td style="text-align:right;">$28.50</td>
-                  <td style="text-align:right; font-weight:600;">$2,850.00</td>
-                </tr>
+                <!-- Dynamically loaded -->
               </tbody>
-            </table>
-          </div>
-
-          <!-- Invoice summary breakdowns -->
-          <div class="invoice-summary-block">
-            <table class="invoice-summary-table">
-              <tr>
-                <td style="color:var(--text-secondary);">Subtotal</td>
-                <td style="text-align:right; font-weight:600;" id="po-subtotal">$71,850.00</td>
-              </tr>
-              <tr>
-                <td style="color:var(--text-secondary);">CGST (9%)</td>
-                <td style="text-align:right; font-weight:600;" id="po-cgst">$6,466.50</td>
-              </tr>
-              <tr>
-                <td style="color:var(--text-secondary);">SGST (9%)</td>
-                <td style="text-align:right; font-weight:600;" id="po-sgst">$6,466.50</td>
-              </tr>
-              <tr class="invoice-grand-total">
-                <td style="padding-top:14px; font-weight:700; color:var(--sidebar-bg);">Grand Total</td>
-                <td style="text-align:right; padding-top:14px; font-size:22px; font-weight:700; color:var(--sidebar-bg);" id="po-grand-total">$84,783.00</td>
-              </tr>
             </table>
           </div>
 
           <!-- Bottom interactive elements -->
           <div style="border-top:1px solid var(--border-color); padding-top:20px; margin-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-            <div style="display:flex; gap:10px;">
-              <button class="btn-select" id="btn-pending-payment" style="width:auto; font-size:12px; color:var(--warning); border-color:var(--warning); font-weight:600; display:inline-flex; align-items:center; gap:4px; background:rgba(245,158,11,0.05);">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Pending Payment
-              </button>
-              <button class="btn-select-approve" id="btn-mark-paid" style="width:auto; font-size:12px; padding:6px 12px; font-weight:600; display:inline-flex; align-items:center; gap:4px;">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Mark as Paid
-              </button>
+            <div style="display:flex; align-items:center; gap:8px; font-size: 13.5px;">
+              <span style="color: var(--text-secondary); font-weight: 600; font-style: italic;">status:</span>
+              <span id="po-status-badge" style="font-weight: 700; color: var(--warning);">Pending Payment</span>
+              <button id="btn-mark-paid-link" style="background: none; border: none; color: var(--sidebar-active-bg); font-weight: 700; cursor: pointer; text-decoration: underline; font-size: 13.5px; padding: 0; margin-left: 12px; transition: color 0.2s ease;">mark as Paid</button>
             </div>
             <span style="font-size:11.5px; color:var(--text-muted); font-style:italic;">* Please include PO Number in all transaction references.</span>
           </div>

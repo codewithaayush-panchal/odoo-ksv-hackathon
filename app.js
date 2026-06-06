@@ -147,6 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (targetId === "dashboard") renderDashboard();
     if (targetId === "vendors") renderVendors();
     if (targetId === "rfqs") renderRFQs();
+    if (targetId === "quotations") renderQuotations();
     if (targetId === "approvals") renderApprovals();
     if (targetId === "po") renderPO();
     if (targetId === "invoices") renderInvoices();
@@ -840,6 +841,42 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("submit-calc-grand-total").textContent = Math.round(grandTotal).toLocaleString();
   }
 
+  function renderQuotations() {
+    const rfqs = window.VBState.getData("rfqs", []);
+    const activeRFQ = rfqs.find(r => r.id === "RFQ-2024-089") || rfqs[0];
+    
+    if (!quotationsSubmitView || !quotationsCompareView) return;
+    
+    // Load saved TechCore quote if exists
+    const savedQuoteStr = localStorage.getItem("stitch_vb_techcore_submitted_quote");
+    if (savedQuoteStr) {
+      const savedQuote = JSON.parse(savedQuoteStr);
+      if (document.getElementById("comp-total-techcore")) {
+        document.getElementById("comp-total-techcore").textContent = savedQuote.total;
+      }
+      if (document.getElementById("comp-gst-techcore")) {
+        document.getElementById("comp-gst-techcore").textContent = savedQuote.gst;
+      }
+      if (document.getElementById("comp-deliv-techcore")) {
+        document.getElementById("comp-deliv-techcore").textContent = savedQuote.delivery;
+      }
+      // Set values back in inputs in case user wants to re-submit
+      if (priceInput1) priceInput1.value = savedQuote.price1;
+      if (priceInput2) priceInput2.value = savedQuote.price2;
+      if (gstInput) gstInput.value = savedQuote.gst + " %";
+      if (notesInput) notesInput.value = savedQuote.notes;
+    }
+    
+    if (activeRFQ && (activeRFQ.status === "Comparing" || activeRFQ.status === "Pending L2 Approval" || activeRFQ.status === "PO Generated")) {
+      quotationsSubmitView.style.display = "none";
+      quotationsCompareView.style.display = "block";
+    } else {
+      quotationsSubmitView.style.display = "block";
+      quotationsCompareView.style.display = "none";
+      recalculateQuotationSubmitForm();
+    }
+  }
+
   if (priceInput1) priceInput1.addEventListener("input", recalculateQuotationSubmitForm);
   if (priceInput2) priceInput2.addEventListener("input", recalculateQuotationSubmitForm);
   if (gstInput) gstInput.addEventListener("input", recalculateQuotationSubmitForm);
@@ -856,6 +893,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const subtotal = (25 * price1) + (10 * price2);
       const grandTotal = Math.round(subtotal * (1 + gstPercent/100));
       const maxDeliv = Math.max(deliv1, deliv2);
+
+      // Save TechCore quote details in localStorage
+      const techcoreQuote = {
+        total: grandTotal,
+        gst: gstPercent,
+        delivery: maxDeliv,
+        price1: price1,
+        price2: price2,
+        notes: notesInput.value.trim()
+      };
+      localStorage.setItem("stitch_vb_techcore_submitted_quote", JSON.stringify(techcoreQuote));
 
       // Update comparison table values dynamically
       document.getElementById("comp-total-techcore").textContent = grandTotal;

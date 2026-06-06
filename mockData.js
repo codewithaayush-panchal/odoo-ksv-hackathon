@@ -104,25 +104,25 @@ const DEFAULT_PO = [
     rfqId: "RFQ-2024-089",
     quotationId: "QUO-X892-GTS",
     vendorId: "VND-INFRA",
-    poNumber: "PO #8842-VB-2023",
-    createdAt: "Oct 24, 2023",
-    invoiceDate: "Oct 25, 2023",
-    dueDate: "Nov 24, 2023",
+    poNumber: "PO-2025-0068",
+    createdAt: "21 may, 2025",
+    invoiceDate: "22 may 2025",
+    dueDate: "21 june 2025",
     paymentTerms: "Net 30 Days",
-    fromOrg: "VendorBridge Logistics Corp.",
-    fromAddress: "451 Procurement Way, Suite 200, Austin, TX 78701, USA",
+    fromOrg: "your Organization Name",
+    fromAddress: "123 business park, ahmedabad\nGSTIN:25383438AFB",
     fromEmail: "logistics@vendorbridge.com",
-    toOrg: "Infra Supplies Pvt ltd",
-    toAddress: "New Delhi, India",
-    toVatId: "VAT ID: US88392011",
-    subtotal: 157119,
-    cgst: 14140.50, // 9%
-    sgst: 14140.50, // 9%
-    total: 185400,
+    toOrg: "Infra supplies pvt ltd",
+    toAddress: "456, industrial estate, surat\nGSTIN: 343434DB4523",
+    toVatId: "GSTIN: 343434DB4523",
+    subtotal: 169500,
+    cgst: 15255, // 9%
+    sgst: 15255, // 9%
+    total: 200010,
     status: "Pending Payment",
     items: [
-      { desc: "Ergonomic chair", partNo: "Part #EC-25", qty: 25, price: 3000, total: 75000 },
-      { desc: "Standing desks", partNo: "Part #SD-10", qty: 10, price: 8211.90, total: 82119 }
+      { desc: "Ergonomic chair", partNo: "Part #EC-25", qty: 25, price: 3500, total: 87500 },
+      { desc: "Tech Core LTD", partNo: "Part #TC-10", qty: 10, price: 8200, total: 82000 }
     ],
     shipmentInstructions: "Freight to be handled via BlueStar Logistics. Delivery window: 09:00 - 16:00 Mon-Fri. Warehouse Gate 4."
   }
