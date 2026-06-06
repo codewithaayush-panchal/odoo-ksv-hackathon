@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VendorBridge | Procurement ERP</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- 1. AUTH PORTAL (Flipping Card - styled in Clean Enterprise Mode) -->
+  <div id="login-portal" class="login-screen-wrapper">
+    <div class="login-blur-overlay"></div>
+    <div class="login-card-container" id="auth-card-container">
+      <div class="flip-card-inner">
+        
+        <!-- Login Card Front -->
+        <div class="auth-form-card">
+          <div style="text-align: center; margin-bottom: 24px;">
+            <h2 style="font-size: 28px; font-weight: 700; color: #073aa5; letter-spacing: -0.5px;">VendorBridge</h2>
+            <p style="color: #475569; font-size: 13.5px; margin-top: 4px; font-weight: 500;">Procurement &amp; Vendor Management ERP</p>
+          </div>
+          <form id="login-form">
+            <div class="form-group">
+              <label class="form-label" for="login-email">Email Address</label>
+              <input type="email" id="login-email" class="form-input" required value="jessica.davis@vendorbridge.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="login-password">Password</label>
+              <input type="password" id="login-password" class="form-input" required value="password123">
+            </div>
+            <button type="submit" class="btn-select-approve" style="width:100%; padding:11px; margin-top: 10px;">Sign In</button>
+          </form>
+          <div style="text-align: center; margin-top: 20px;">
+            <a class="auth-toggle-link" id="btn-show-register">Don't have an account? Register</a>
+          </div>
+          
+          <div style="margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 16px; text-align: center;">
+            <span style="font-size: 10px; font-weight: 600; color: #94a3b8; text-transform: uppercase; display: block; margin-bottom: 8px;">Quick Demo Access</span>
+            <button class="btn-select demo-login-btn" data-role="Procurement Officer" style="font-size: 11px; padding: 6px 12px; margin-bottom: 6px; width:100%;">Login as Jessica Davis (Officer)</button>
+          </div>
+        </div>
+
+        <!-- Registration Card Back -->
+        <div class="auth-form-card card-back" style="max-width: 580px; margin: 0 auto;">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <h2 style="font-size: 26px; font-weight: 700; color: #073aa5; letter-spacing: -0.5px;">Register Account</h2>
+            <p style="color: #475569; font-size: 13px; margin-top: 4px; font-weight: 500;">Create partner or department profile</p>
+          </div>
+
+          <!-- Photo upload circle matching wireframe (Screen 2) -->
+          <div class="wireframe-photo-circle" id="reg-photo-container" style="cursor: pointer; overflow: hidden; position: relative;" title="Click to upload photo">
+            <span id="reg-photo-placeholder">Photo</span>
+            <img id="reg-photo-preview" style="display: none; width: 100%; height: 100%; object-fit: cover;" />
+            <input type="file" id="reg-photo-input" style="display: none;" accept="image/*" />
+          </div>
+
+          <form id="register-form">
+            <div class="register-grid">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="reg-first-name">First Name*</label>
+                <input type="text" id="reg-first-name" class="form-input" required placeholder="Sarah">
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="reg-last-name">Last Name*</label>
+                <input type="text" id="reg-last-name" class="form-input" required placeholder="Mitchell">
+              </div>
+
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="reg-email">Email Address*</label>
+                <input type="email" id="reg-email" class="form-input" required placeholder="s.mitchell@vendorbridge.com">
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="reg-phone">Phone Number</label>
+                <input type="text" id="reg-phone" class="form-input" placeholder="XYZ Number">
+              </div>
+
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="reg-role">Role (Admin, officer)</label>
+                <select id="reg-role" class="form-input" style="height: 42px;">
+                  <option value="Senior Procurement Director">Senior Procurement Director (L2)</option>
+                  <option value="Department Manager">Department Manager (L1)</option>
+                  <option value="Procurement Officer">Procurement Officer</option>
+                  <option value="Procurement Analyst">Procurement Analyst</option>
+                </select>
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="reg-country">Country</label>
+                <input type="text" id="reg-country" class="form-input" placeholder="India">
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+              <label class="form-label" for="reg-additional-info">Additional Information ....</label>
+              <textarea id="reg-additional-info" class="form-input" style="min-height: 80px; resize: none;" placeholder="Enter any additional details or background here..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-select-approve" style="width:100%; padding:11px; margin-top: 10px;">Register</button>
+          </form>
+          
+          <div style="text-align: center; margin-top: 20px;">
+            <a class="auth-toggle-link" id="btn-show-login">Already have an account? Login</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN DASHBOARD CONTENT -->
+  <div id="app-container" style="display: none;">
+    
+    <!-- SIDEBAR -->
+    <aside id="sidebar">
+      <div class="sidebar-logo">
+        VendorBridge
+      </div>
+      <nav class="sidebar-menu">
+        <a class="nav-link active" data-target="dashboard">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"></rect><rect x="14" y="3" width="7" height="5" rx="1"></rect><rect x="14" y="12" width="7" height="9" rx="1"></rect><rect x="3" y="16" width="7" height="5" rx="1"></rect></svg>
+          - Dashboard
+        </a>
+        <a class="nav-link" data-target="vendors">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+          - Vendors
+        </a>
+        <a class="nav-link" data-target="rfqs">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          - RFQ's
+        </a>
+        <a class="nav-link" data-target="quotations">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line></svg>
+          - Quotations
+        </a>
+        <a class="nav-link" data-target="approvals">
+          <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          - Approvals
+        </a>
+        <a class="nav-link" data-target="po">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="12" y1="4" x2="12" y2="20"></line></svg>
+          - Purchase orders
+        </a>
+        <a class="nav-link" data-target="invoices">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><line x1="16" y1="13" x2="8" y2="13"></line></svg>
+          - Invoices
+        </a>
+        <a class="nav-link" data-target="reports">
+          <svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+          - Reports
+        </a>
+        <a class="nav-link" data-target="activity">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          - Activity
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-badge">
+          <div class="user-avatar" id="sidebar-user-avatar">JD</div>
+          <div class="user-info">
+            <span class="user-name" id="sidebar-user-name">Jessica Davis</span>
+            <span class="user-role" id="sidebar-user-role">Senior Procurement Director</span>
+          </div>
+        </div>
+        <div style="display:flex; gap:6px;">
+          <button class="btn-select" id="btn-reset" style="padding: 4px; font-size: 11px; border-color: rgba(255,255,255,0.2); color:#fff; background:none;">Reset</button>
+          <button class="btn-select" id="btn-logout" style="padding: 4px; font-size: 11px; border-color:var(--danger); color:var(--danger); background:none;">Sign Out</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CONTENT WRAPPER -->
+    <main id="main-content">
+      
+      <!-- TOP HEADER -->
+      <header id="header">
+        <div class="header-left">
+          <button class="hamburger-btn" id="btn-toggle-sidebar" aria-label="Toggle Sidebar">
+            <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <span class="header-title" id="header-page-title">Dashboard</span>
+        </div>
+        <div class="header-actions">
+          <button class="header-icon-btn">
+            <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          </button>
+          <div class="header-user-avatar">JD</div>
+        </div>
+      </header>
+
+      <!-- 2. DASHBOARD VIEW (High Fidelity Recreated) -->
+      <section id="section-dashboard" class="page-section active">
+        <div style="margin-bottom: 24px;">
+          <h2 style="font-size: 26px; font-weight: 700; color: #1e293b; margin-bottom: 4px;">Dashboard</h2>
+          <p style="font-size: 14px; color: #475569; margin-top: 2px; font-weight: 500;" id="dashboard-welcome">Welcome back, Procurement Officer - Today's Overview</p>
+        </div>
+
+        <!-- 4 KPI Cards -->
+        <div class="dashboard-kpi-grid" style="margin-bottom: 24px;">
+          <!-- Card 1: Active RFQs -->
+          <div class="kpi-card" style="text-align: center; justify-content: center; min-height: 120px;">
+            <div class="kpi-card-value" style="color: #073aa5; font-size: 36px;" id="kpi-active-rfqs-val">12</div>
+            <div class="kpi-card-title" style="font-size: 12px; margin-top: 4px; text-transform: none; color: #475569;">Active RFQ's</div>
+          </div>
+
+          <!-- Card 2: Pending Approvals -->
+          <div class="kpi-card" style="text-align: center; justify-content: center; min-height: 120px;">
+            <div class="kpi-card-value" style="color: #fbbf24; font-size: 36px;" id="kpi-pending-approvals-val">5</div>
+            <div class="kpi-card-title" style="font-size: 12px; margin-top: 4px; text-transform: none; color: #475569;">Pending Approvals</div>
+          </div>
+
+          <!-- Card 3: POs this Month -->
+          <div class="kpi-card" id="card-spending-trends" style="text-align: center; justify-content: center; min-height: 120px; cursor: pointer; border-left: 4px solid var(--sidebar-bg);">
+            <div class="kpi-card-value" style="color: #10b981; font-size: 36px;">$ 227,283</div>
+            <div class="kpi-card-title" style="font-size: 12px; margin-top: 4px; text-transform: none; color: #475569;">PO's this month</div>
+          </div>
+
+          <!-- Card 4: Overdue Invoices -->
+          <div class="kpi-card" style="text-align: center; justify-content: center; min-height: 120px;">
+            <div class="kpi-card-value" style="color: #ef4444; font-size: 36px;">3</div>
+            <div class="kpi-card-title" style="font-size: 12px; margin-top: 4px; text-transform: none; color: #475569;">overdue invoices</div>
+          </div>
+        </div>
+
+        <!-- Two Column Content Layout: Recent Purchase Orders & Spending Trends -->
+        <div class="two-column-layout" style="gap: 24px; align-items: start; margin-bottom: 24px;">
+          <!-- Left: Recent Purchase Orders Card -->
+          <div class="card" style="padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: var(--shadow-sm); margin-bottom: 0;">
+            <div class="card-title" style="font-size: 15px; font-weight: 600; margin-bottom: 16px; color: #1e293b;">Recent Purchase Orders</div>
+            <div class="table-container">
+              <table class="vb-table" id="dashboard-po-table">
+                <thead>
+                  <tr>
+                    <th>PO#</th>
+                    <th>Vendor</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="font-weight: 700; color: #073aa5; cursor: pointer;" class="dash-po-link" data-poid="PO-8842-VB-2023">Po1</td>
+                    <td style="font-weight: 600;">Infra</td>
+                    <td style="font-weight: 700;">87000</td>
+                    <td><span class="status-tag status-active">Approved</span></td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 700; color: #073aa5; cursor: pointer;" class="dash-po-link" data-poid="PO-8842-VB-2023">Po2</td>
+                    <td style="font-weight: 600;">Tech core</td>
+                    <td style="font-weight: 700;">140000</td>
+                    <td><span class="status-tag status-pending">Pending</span></td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 700; color: #073aa5; cursor: pointer;" class="dash-po-link" data-poid="PO-8842-VB-2023">Po3</td>
+                    <td style="font-weight: 600;">OfficeNeed Co</td>
+                    <td style="font-weight: 700;">34900</td>
+                    <td><span class="status-tag status-blocked">draft</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Right: Spending Trends Sparkline/Charts card -->
+          <div class="card" style="padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: var(--shadow-sm); margin-bottom: 0;">
+            <div class="card-title" style="font-size: 15px; font-weight: 600; margin-bottom: 12px; color: #1e293b;">Spending Trends last 6 months</div>
+            
+            <!-- Category distribution progress bars + Sparkline mockup -->
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px; color: #1e293b;">
+                  <span>IT Hardware &amp; Parts</span>
+                  <span style="font-weight:600;">$142,500.00 (62%)</span>
+                </div>
+                <div style="height:6px; width:100%; background-color:#f1f5f9; border-radius:3px; overflow:hidden; border:1px solid #e2e8f0;">
+                  <div style="height:100%; width:62%; background-color:#10b981; border-radius:3px;"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px; color: #1e293b;">
+                  <span>Office Logistics</span>
+                  <span style="font-weight:600;">$54,783.00 (24%)</span>
+                </div>
+                <div style="height:6px; width:100%; background-color:#f1f5f9; border-radius:3px; overflow:hidden; border:1px solid #e2e8f0;">
+                  <div style="height:100%; width:24%; background-color:#073aa5; border-radius:3px;"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px; color: #1e293b;">
+                  <span>SaaS &amp; Softwares</span>
+                  <span style="font-weight:600;">$30,000.00 (14%)</span>
+                </div>
+                <div style="height:6px; width:100%; background-color:#f1f5f9; border-radius:3px; overflow:hidden; border:1px solid #e2e8f0;">
+                  <div style="height:100%; width:14%; background-color:#f59e0b; border-radius:3px;"></div>
+                </div>
+              </div>
+              
+              <!-- Quick interactive link to open full analytic charts panel -->
+              <div style="text-align: center; margin-top: 8px; border-top: 1px solid #e2e8f0; padding-top: 12px;">
+                <span id="btn-open-trends-link" style="color: #073aa5; font-weight: 600; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+                  <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none"><rect x="18" y="3" width="4" height="18" rx="1"></rect><rect x="10" y="8" width="4" height="13" rx="1"></rect><rect x="2" y="13" width="4" height="8" rx="1"></rect></svg>
+                  View Monthly Distribution Charts
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Horizontal Divider line -->
+        <hr style="border: none; border-top: 1px solid #cbd5e1; margin: 24px 0;" />
+
+        <!-- Bottom Action Buttons Row -->
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px;">
+          <button class="btn-select" id="dash-btn-new-rfq" style="width: auto; min-width: 140px; padding: 10px 24px;">+ new RFQ</button>
+          <button class="btn-select" id="dash-btn-add-vendor" style="width: auto; min-width: 140px; padding: 10px 24px;">Add Vendor</button>
+          <button class="btn-select" id="dash-btn-view-invoices" style="width: auto; min-width: 140px; padding: 10px 24px;">view Invoices</button>
+        </div>
+
+        <!-- Hidden detailed spending trends section (toggled on card click) -->
+        <div class="card analytics-overlay-card" id="analytics-details-panel" style="border: 1px solid #e2e8f0 !important; background-color: #ffffff !important; box-shadow: var(--shadow-lg);">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:14px; margin-bottom:20px;">
+            <div>
+              <h3 style="font-size: 16px; font-weight:700; color:#1e293b;">Detailed Spend Analysis</h3>
+              <p style="font-size: 12px; color:#475569;">Interactive breakdown of company expenditures.</p>
+            </div>
+            <button class="btn-select" id="btn-close-analytics" style="width:auto; padding:6px 12px; font-size:12px; border:1px solid #073aa5 !important;">Close Details</button>
+          </div>
+          
+          <div class="trends-grid">
+            <!-- Monthly Spending Bar Chart -->
+            <div>
+              <h4 style="font-size:13px; font-weight:600; margin-bottom:10px; color:#1e293b;">Monthly Spending Trend (Jan - May)</h4>
+              <div class="chart-canvas-mock" id="monthly-chart-canvas" style="background-color: #fafbfc !important; border: 1px solid #e2e8f0 !important;">
+                <!-- Bars filled dynamically -->
+              </div>
+            </div>
+            
+            <!-- Category Expense Distribution -->
+            <div>
+              <h4 style="font-size:13px; font-weight:600; margin-bottom:10px; color:#1e293b;">Category-wise Expense Breakdown</h4>
+              <div class="chart-canvas-mock" style="flex-direction:column; align-items:stretch; justify-content:center; gap:12px; background-color: #fafbfc !important; border: 1px solid #e2e8f0 !important;">
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px; color: #1e293b;">
+                    <span>IT Hardware &amp; Parts</span>
+                    <span style="font-weight:600;">$142,500.00 (62%)</span>
+                  </div>
+                  <div style="height:8px; width:100%; background-color:#f1f5f9; border-radius:4px; overflow:hidden; border:1px solid #e2e8f0;">
+                    <div style="height:100%; width:62%; background-color:#10b981; border-radius:4px;"></div>
+                  </div>
+                </div>
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px; color: #1e293b;">
+                    <span>Office Logistics</span>
+                    <span style="font-weight:600;">$54,783.00 (24%)</span>
+                  </div>
+                  <div style="height:8px; width:100%; background-color:#f1f5f9; border-radius:4px; overflow:hidden; border:1px solid #e2e8f0;">
+                    <div style="height:100%; width:24%; background-color:#38bdf8; border-radius:4px;"></div>
+                  </div>
+                </div>
+                <div>
+                  <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px; color: #1e293b;">
+                    <span>SaaS &amp; Softwares</span>
+                    <span style="font-weight:600;">$30,000.00 (14%)</span>
+                  </div>
+                  <div style="height:8px; width:100%; background-color:#f1f5f9; border-radius:4px; overflow:hidden; border:1px solid #e2e8f0;">
+                    <div style="height:100%; width:14%; background-color:#f59e0b; border-radius:4px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. VENDORS SCREEN -->
+      <section id="section-vendors" class="page-section">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+          <div>
+            <h2 style="font-size:26px; font-weight:700; color:#1e293b; margin-bottom:4px;">Vendors</h2>
+            <p style="font-size: 13.5px; color:#475569; margin-top:2px;">Manage supplier profiles and registrations</p>
+          </div>
+          <button class="btn-select-approve" id="btn-add-vendor" style="width: auto; padding: 8px 16px;">+ Add Vendor</button>
+        </div>
+
+        <div class="card" style="padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: var(--shadow-sm);">
+          <!-- Search box -->
+          <div style="margin-bottom: 16px;">
+            <input type="text" id="vendor-search-input" class="form-input" placeholder="Search bar ...... search by name, gst number, category..." style="width: 100%;">
+          </div>
+
+          <!-- Filter Pills -->
+          <div style="display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;">
+            <button class="filter-pill active" data-filter="All">All (28)</button>
+            <button class="filter-pill" data-filter="Active">active (21)</button>
+            <button class="filter-pill" data-filter="Pending">Pending (4)</button>
+            <button class="filter-pill" data-filter="Blocked">Blocked (3)</button>
+          </div>
+
+          <div class="table-container">
+            <table class="vb-table" id="vendors-table">
+              <thead>
+                <tr>
+                  <th>Vendor Name</th>
+                  <th>Category</th>
+                  <th>GST no.</th>
+                  <th>contact no.</th>
+                  <th>Status</th>
+                  <th style="text-align: center;">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Loaded dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. RFQS SCREEN -->
+      <section id="section-rfqs" class="page-section">
+        
+        <!-- View A: RFQs List View -->
+        <div id="rfqs-list-view">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <div>
+              <h2 style="font-size:26px; font-weight:700; color:#1e293b; margin-bottom:4px;">Request For Quotations</h2>
+              <p style="font-size: 13.5px; color:#475569; margin-top:2px;">Track and manage current active procurement requests.</p>
+            </div>
+            <button class="btn-select-approve" id="btn-show-create-rfq" style="width: auto; padding: 8px 16px;">+ Create RFQ</button>
+          </div>
+
+          <div class="card" style="padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: var(--shadow-sm);">
+            <div class="table-container">
+              <table class="vb-table" id="rfqs-table">
+                <thead>
+                  <tr>
+                    <th>RFQ Reference</th>
+                    <th>Title</th>
+                    <th>Deadline</th>
+                    <th>Assigned Pool</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Loaded dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- View B: Create RFQ Form (Image 3 Recreated) -->
+        <div id="rfqs-create-view" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+              <h2 style="font-size:26px; font-weight:700; color:#1e293b; margin-bottom:4px;">Create RFQ's</h2>
+              <p style="font-size: 13.5px; color:#475569; margin-top:2px;">new request for quotation</p>
+            </div>
+            <button class="btn-select" id="btn-cancel-create-rfq" style="width: auto; padding: 8px 16px;">Back to List</button>
+          </div>
+
+          <!-- Progress Stepper -->
+          <div class="workflow-progress-card" style="margin-bottom: 24px;">
+            <div class="workflow-stepper">
+              <div class="workflow-stepper-fill" style="width: 0%;"></div>
+              <div class="step-item">
+                <div class="step-node active">1</div>
+                <span class="step-label">Draft</span>
+              </div>
+              <div class="step-item">
+                <div class="step-node">2</div>
+                <span class="step-label">Sent to Vendors</span>
+              </div>
+              <div class="step-item">
+                <div class="step-node">3</div>
+                <span class="step-label">Received Quotes</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Two Column Form Grid -->
+          <div class="two-column-layout" style="align-items: start; gap: 24px;">
+            
+            <!-- Left Side: Basic Info -->
+            <div class="card" style="padding: 24px; margin-bottom: 0;">
+              <form id="create-rfq-form-left">
+                <div class="form-group">
+                  <label class="form-label" for="new-rfq-title">RFQ's title*</label>
+                  <input type="text" id="new-rfq-title" class="form-input" required placeholder="Office Furniture procurement Q2" value="Office Furniture procurement Q2">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="new-rfq-category">Category</label>
+                  <input type="text" id="new-rfq-category" class="form-input" placeholder="Furniture" value="Furniture">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="new-rfq-deadline">Deadline*</label>
+                  <input type="text" id="new-rfq-deadline" class="form-input" required placeholder="15 June 2025" value="15 June 2025">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="new-rfq-description">Description</label>
+                  <textarea id="new-rfq-description" class="form-input" style="min-height: 100px; resize: none;" placeholder="Ergonomic chairs and standing desks for 3rd floor">Ergonomic chairs and standing desks for 3rd floor</textarea>
+                </div>
+              </form>
+            </div>
+
+            <!-- Right Side: Items, Vendors & Upload -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+              
+              <!-- Line Items Box -->
+              <div class="card" style="padding: 24px; margin-bottom: 0;">
+                <div class="card-title" style="margin-bottom: 12px;">Line items</div>
+                <div class="table-container" style="margin-bottom: 12px;">
+                  <table class="vb-table" id="new-rfq-items-table" style="font-size: 13px;">
+                    <thead>
+                      <tr>
+                        <th>item</th>
+                        <th>qty</th>
+                        <th>Unit</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><input type="text" class="form-input item-name-input" value="Ergonomic chair" style="padding:6px; font-size:12px;"></td>
+                        <td><input type="number" class="form-input item-qty-input" value="25" style="padding:6px; font-size:12px; width:70px;"></td>
+                        <td><input type="text" class="form-input item-unit-input" value="NOS" style="padding:6px; font-size:12px; width:70px;"></td>
+                        <td><button class="btn-select btn-delete-item" style="padding:4px 8px; font-size:11px; width:auto; border-color:var(--danger); color:var(--danger);">x</button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="text" class="form-input item-name-input" value="Standing desks" style="padding:6px; font-size:12px;"></td>
+                        <td><input type="number" class="form-input item-qty-input" value="10" style="padding:6px; font-size:12px; width:70px;"></td>
+                        <td><input type="text" class="form-input item-unit-input" value="NOS" style="padding:6px; font-size:12px; width:70px;"></td>
+                        <td><button class="btn-select btn-delete-item" style="padding:4px 8px; font-size:11px; width:auto; border-color:var(--danger); color:var(--danger);">x</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <button class="btn-select" id="btn-add-rfq-item" style="width: auto; padding: 6px 12px; font-size: 12.5px;">+ add line item</button>
+              </div>
+
+              <!-- Assign Vendors Box -->
+              <div class="card" style="padding: 24px; margin-bottom: 0;">
+                <div class="card-title" style="margin-bottom: 12px;">ASSIGN VENDORS</div>
+                <div id="assigned-vendors-container" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;" class="assigned-vendor-pill" data-vendor="VND-INFRA">
+                    <span style="font-size: 13px; font-weight: 600;">Infra Supplies Pvt ltd</span>
+                    <span style="cursor: pointer; font-weight: 700; color: var(--danger); font-size: 14px;" class="btn-remove-assigned-vendor">×</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;" class="assigned-vendor-pill" data-vendor="VND-TECHCORE">
+                    <span style="font-size: 13px; font-weight: 600;">Techcore LTD</span>
+                    <span style="cursor: pointer; font-weight: 700; color: var(--danger); font-size: 14px;" class="btn-remove-assigned-vendor">×</span>
+                  </div>
+                </div>
+                <button class="btn-select" id="btn-add-rfq-vendor" style="width: auto; padding: 6px 12px; font-size: 12.5px;">+ add vendor</button>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Bottom Action Buttons and Upload -->
+          <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; margin-top: 24px; align-items: start;">
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <button class="btn-select-approve" id="btn-save-send-rfq" style="padding: 10px;">Save &amp; Send to Vendors</button>
+              <button class="btn-select" id="btn-save-draft-rfq" style="padding: 10px;">Save as Draft</button>
+            </div>
+            
+            <div class="card" id="rfq-upload-zone" style="padding: 24px; border-style: dashed; border-width: 2px; text-align: center; margin-bottom: 0; background: #fafbfc; min-height: 106px; display: flex; flex-direction: column; justify-content: center; cursor: pointer;">
+              <div style="font-size: 11px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 6px;">Attachments</div>
+              <span id="rfq-upload-label" style="font-size: 12.5px; color: var(--text-muted);">Drag &amp; drop files or click to upload</span>
+              <input type="file" id="rfq-file-input" style="display: none;">
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- 5. QUOTATIONS SCREEN -->
+      <section id="section-quotations" class="page-section">
+        
+        <!-- View A: Submit Quotations (Image 1 Recreated) -->
+        <div id="quotations-submit-view">
+          <div style="margin-bottom: 24px;">
+            <h2 style="font-size:26px; font-weight:700; color:#1e293b; margin-bottom:4px;">Submit Quotations</h2>
+            <p style="font-size: 13.5px; color:#475569; margin-top:2px;">RFQ: office furniture procurement q2 - deadline 15 june 2025</p>
+          </div>
+
+          <div class="card" style="padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: var(--shadow-sm);">
+            <!-- RFQ Summary Box -->
+            <div style="background-color: #fafbfc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 24px;">
+              <span style="font-size: 11px; font-weight: 700; color: #475569; letter-spacing: 0.5px; text-transform: uppercase; display: block; margin-bottom: 6px;">RFQ Summary</span>
+              <span style="font-size: 13.5px; font-weight: 500; color: #1e293b; line-height: 1.4;">Ergonomic chair * 25, standing desk * 10 - category furniture</span>
+            </div>
+
+            <div class="card-title" style="margin-bottom: 12px;">Your Quotation</div>
+            <div class="table-container" style="margin-bottom: 24px;">
+              <table class="vb-table" id="submit-quotation-table">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th style="text-align: center;">Qty</th>
+                    <th>Unit price</th>
+                    <th>Total</th>
+                    <th>Delivery (days)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="font-weight: 600;">Ergonomic chair</td>
+                    <td style="text-align: center;" id="submit-qty-1">25</td>
+                    <td><input type="number" id="submit-price-1" class="form-input" value="3500" style="padding:6px; font-size:13px; width:100px;"></td>
+                    <td style="font-weight: 700; color: #1e293b;">$<span id="submit-total-1">87,500</span></td>
+                    <td><input type="number" id="submit-deliv-1" class="form-input" value="7" style="padding:6px; font-size:13px; width:80px;"></td>
+                  </tr>
+                  <tr>
+                    <td style="font-weight: 600;">Tech Core LTD</td>
+                    <td style="text-align: center;" id="submit-qty-2">10</td>
+                    <td><input type="number" id="submit-price-2" class="form-input" value="8200" style="padding:6px; font-size:13px; width:100px;"></td>
+                    <td style="font-weight: 700; color: #1e293b;">$<span id="submit-total-2">82,000</span></td>
+                    <td><input type="number" id="submit-deliv-2" class="form-input" value="14" style="padding:6px; font-size:13px; width:80px;"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Tax, Notes and Calculations Grid -->
+            <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: start;">
+              
+              <!-- Left Form inputs -->
+              <div>
+                <div class="form-group">
+                  <label class="form-label" for="submit-gst-input">tax / GST %</label>
+                  <input type="text" id="submit-gst-input" class="form-input" value="18 %" style="width: 100%;">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label class="form-label" for="submit-notes-input">Note / terms</label>
+                  <textarea id="submit-notes-input" class="form-input" style="min-height: 90px; resize: none;">Payment terms: 20 days net...</textarea>
+                </div>
+              </div>
+
+              <!-- Right totals display -->
+              <div class="insight-card" style="padding: 20px; background-color: #f8fafc; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                <table style="width:100%; border-collapse:collapse; font-size: 13.5px;">
+                  <tbody>
+                    <tr>
+                      <td style="padding: 8px 0; color: var(--text-secondary);">Subtotal</td>
+                      <td style="padding: 8px 0; text-align: right; font-weight: 600; color: #1e293b;">$<span id="submit-calc-subtotal">1,69,500</span></td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 8px 0; color: var(--text-secondary);">GST (18%)</td>
+                      <td style="padding: 8px 0; text-align: right; font-weight: 600; color: #1e293b;">$<span id="submit-calc-gst">30,510</span></td>
+                    </tr>
+                    <tr style="border-top: 1px solid #e2e8f0;">
+                      <td style="padding: 12px 0 0; font-weight: 700; color: #073aa5; font-size: 15px;">Grand total</td>
+                      <td style="padding: 12px 0 0; text-align: right; font-weight: 700; color: #073aa5; font-size: 18px;">$<span id="submit-calc-grand-total">2,00,010</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+
+            <!-- Action buttons -->
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+              <button class="btn-select-approve" id="btn-submit-quotation" style="width: auto; padding: 10px 24px;">Submit Quotation</button>
+              <button class="btn-select" id="btn-draft-quotation" style="width: auto; padding: 10px 24px;">Save Draft</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- View B: Quotations Comparison (Image 4 Recreated) -->
+        <div id="quotations-compare-view" style="display: none;">
+          <div style="margin-bottom: 24px;">
+            <h2 style="font-size:26px; font-weight:700; color:#1e293b; margin-bottom:4px;">Quotation Comparison</h2>
+            <p style="font-size: 13.5px; color:#475569; margin-top:2px;">RFQ: office furniture procurement q2 - 3 quotations received</p>
+          </div>
+
+          <div class="card" style="padding: 0; overflow:hidden; border-radius: 12px; border: 1px solid #e2e8f0; background: #ffffff; box-shadow: var(--shadow-sm);">
+            <div class="table-container">
+              <table class="vb-table" style="text-align: center;">
+                <thead>
+                   <tr>
+                    <th style="text-align: left; padding-left: 20px;">Criterion</th>
+                    <th class="lowest-quote-col" style="text-align: center;">Infra Supplies (Lowest)</th>
+                    <th style="text-align: center;">TechCore LTD</th>
+                    <th style="text-align: center;">Office Need Co.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="text-align: left; padding-left: 20px; font-weight: 600;">Grand Total</td>
+                    <td class="lowest-quote-col" style="color: var(--success); font-weight: 700;">185400</td>
+                    <td style="font-weight: 600;" id="comp-total-techcore">200010</td>
+                    <td style="font-weight: 600;">214800</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left; padding-left: 20px; font-weight: 600;">GST %</td>
+                    <td class="lowest-quote-col">18</td>
+                    <td id="comp-gst-techcore">18</td>
+                    <td>18</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left; padding-left: 20px; font-weight: 600;">Delivery (days)</td>
+                    <td class="lowest-quote-col">10</td>
+                    <td id="comp-deliv-techcore">14</td>
+                    <td>7</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left; padding-left: 20px; font-weight: 600;">Vendor Rating</td>
+                    <td class="lowest-quote-col" style="color: #fbbf24; font-weight: 600;">4.5/5</td>
+                    <td>4.2/5</td>
+                    <td>3.8/5</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left; padding-left: 20px; font-weight: 600;">Payment terms</td>
+                    <td class="lowest-quote-col">30 days</td>
+                    <td>30 days</td>
+                    <td>15 days</td>
+                  </tr>
+                  <tr style="border-top: 1px solid #e2e8f0;">
+                    <td style="text-align: left; padding-left: 20px; padding-top: 16px; padding-bottom: 16px;"></td>
+                    <td class="lowest-quote-col" style="padding-top: 16px; padding-bottom: 16px; padding-left: 12px; padding-right: 12px;">
+                      <button class="btn-select-approve" id="btn-select-approve-infra" style="font-size: 12.5px; padding: 6px 12px; width: 100%;">Select &amp; Approve</button>
+                    </td>
+                    <td style="padding-top: 16px; padding-bottom: 16px; padding-left: 12px; padding-right: 12px;">
+                      <button class="btn-select" id="btn-select-techcore" style="font-size: 12.5px; padding: 6px 12px; width: 100%;">Select</button>
+                    </td>
+                    <td style="padding-top: 16px; padding-bottom: 16px; padding-left: 12px; padding-right: 12px;">
+                      <button class="btn-select" id="btn-select-officeneed" style="font-size: 12.5px; padding: 6px 12px; width: 100%;">Select</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="padding: 16px 20px; background-color: #fafbfc; border-top: 1px solid #e2e8f0;">
+              <p style="font-size:12px; color:#475569; font-style:italic; margin: 0;">
+                Green = lowest price, selecting vendor initiates the approval workflow.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- 6. APPROVALS SCREEN -->
+      <section id="section-approvals" class="page-section">
+        
+        <!-- Progress Stepper Card -->
+        <div class="workflow-progress-card">
+          <div class="workflow-header">
+            <h2 style="font-size: 18px; font-weight:700;" id="approval-rfq-title">RFQ-2024-089: office furniture procurement q2</h2>
+            <p style="font-size:12.5px; color:var(--text-secondary); margin-top:2px;" id="approval-rfq-meta">Infra Supplies Pvt ltd • $185,400.00</p>
+          </div>
+          
+          <div class="workflow-stepper">
+            <div class="workflow-stepper-fill" id="approval-stepper-fill" style="width: 50%;"></div>
+            
+            <div class="step-item">
+              <div class="step-node completed" id="approval-step-1">✓</div>
+              <span class="step-label">1 Submitted</span>
+              <span class="step-date">Oct 12, 10:45 AM</span>
+            </div>
+            
+            <div class="step-item">
+              <div class="step-node completed" id="approval-step-2">✓</div>
+              <span class="step-label">2 L1 Review</span>
+              <span class="step-date">Oct 13, 02:15 PM</span>
+            </div>
+            
+            <div class="step-item">
+              <div class="step-node active" id="approval-step-3">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+              <span class="step-label">3 L2 approval</span>
+              <span class="step-date" style="color:var(--info); font-weight:600;" id="approval-step-3-date">Current Step</span>
+            </div>
+            
+            <div class="step-item">
+              <div class="step-node" id="approval-step-4">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+              </div>
+              <span class="step-label">4 Generate PO</span>
+              <span class="step-date">-</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Two Column Content Grid -->
+        <div class="two-column-layout">
+          
+          <!-- Left side: Approval Chain & Remarks Form -->
+          <div>
+            <div class="card" style="margin-bottom:0; padding: 24px;">
+              <div class="card-title" style="font-size: 15px; font-weight: 600; margin-bottom: 18px; color: #1e293b;">Approval Chain</div>
+              
+              <div class="approval-chain-timeline">
+                <div class="chain-item">
+                  <div class="chain-node checked"></div>
+                  <div class="chain-header-row">
+                    <span class="chain-user">Rahul Mehta</span>
+                    <span class="chain-time">Oct 12, 10:45 AM</span>
+                  </div>
+                  <div style="font-size:11.5px; color:var(--text-secondary); margin-bottom:6px;">Procurement Analyst (Initiator)</div>
+                  <p class="chain-comment-bubble">"Urgent requirement for Q4 maintenance cycle."</p>
+                </div>
+
+                <div class="chain-item">
+                  <div class="chain-node awaiting"></div>
+                  <div class="chain-header-row">
+                    <span class="chain-user">Priya Shah</span>
+                    <span class="badge badge-warning" style="font-size:9.5px; padding:3px 8px; border-radius:12px;">Awaiting Action</span>
+                  </div>
+                  <div style="font-size:11.5px; color:var(--text-secondary); margin-bottom:6px;">Department Manager (L1)</div>
+                </div>
+              </div>
+
+              <!-- Remarks Input -->
+              <div style="border-top:1px solid var(--border-color); padding-top:20px; margin-top:20px;">
+                <label class="form-label" for="approval-remarks" style="font-weight:600;">Approval Remarks</label>
+                <textarea class="form-input" id="approval-remarks" placeholder="Enter your comments or justification here..." style="min-height:90px; resize:none;"></textarea>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Right side: Quotation Summary & Action Buttons -->
+          <div>
+            <div class="card" style="padding:0; overflow:hidden; margin-bottom:20px;">
+              <div style="background-color:var(--sidebar-bg); color:white; padding:16px 20px;">
+                <h3 style="font-size:14px; font-weight:600; color:white;">Quotation Summary</h3>
+                <span style="font-size:11px; opacity:0.8;">Ref: QUO-X892-GTS</span>
+              </div>
+              
+              <div style="padding:20px;">
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:18px;">
+                  <div style="width:36px; height:36px; border-radius:4px; background-color:#e2f4ee; color:var(--success); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:16px;">I</div>
+                  <div>
+                    <h4 style="font-size:13.5px; font-weight:700;">Infra Supplies Pvt ltd</h4>
+                    <span style="font-size:11px; color:#fbbf24;">★★★★★ <span style="color:var(--text-secondary); font-size:11px;">(4.5 Platinum Vendor)</span></span>
+                  </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; border-bottom:1px solid var(--border-color); padding-bottom:16px;">
+                  <div>
+                    <span style="font-size:11px; color:var(--text-muted); display:block; margin-bottom:2px;">Total Value</span>
+                    <span style="font-size:14px; font-weight:700; color:var(--sidebar-bg);">$185,400.00</span>
+                  </div>
+                  <div>
+                    <span style="font-size:11px; color:var(--text-muted); display:block; margin-bottom:2px;">Delivery ETA</span>
+                    <span style="font-size:13.5px; font-weight:600;">10 Days</span>
+                  </div>
+                  <div>
+                    <span style="font-size:11px; color:var(--text-muted); display:block; margin-bottom:2px;">Payment Terms</span>
+                    <span style="font-size:13.5px; font-weight:600;">30 Days</span>
+                  </div>
+                  <div>
+                    <span style="font-size:11px; color:var(--text-muted); display:block; margin-bottom:2px;">Warranty</span>
+                    <span style="font-size:13.5px; font-weight:600;">12 Months</span>
+                  </div>
+                </div>
+
+                <div style="margin-bottom:16px;">
+                  <span style="font-size:11px; font-weight:600; text-transform:uppercase; color:var(--text-secondary); display:block; margin-bottom:8px;">Line Item Breakdown</span>
+                  <div style="display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:6px;">
+                    <span>Ergonomic chair (x25)</span>
+                    <span style="font-weight:600;">$75,000.00</span>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:6px;">
+                    <span>Standing desks (x10)</span>
+                    <span style="font-weight:600;">$82,119.00</span>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:12px;">
+                    <span>Tax (18% GST)</span>
+                    <span style="font-weight:600;">$28,281.00</span>
+                  </div>
+                </div>
+
+                <!-- Alert card -->
+                <div style="background-color:rgba(59,130,246,0.06); border:1px solid rgba(59,130,246,0.15); border-radius:6px; padding:12px 14px; margin-bottom:20px; display:flex; gap:10px; align-items:flex-start;">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--info)" stroke-width="2" style="margin-top:2px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                  <p style="font-size:11.5px; color:var(--text-secondary); line-height:1.45;">This quote is 8% lower than the historical average for these items. Lead time is 3 days faster than the nearest competitor.</p>
+                </div>
+
+                <!-- Document Link -->
+                <div style="text-align:center; margin-bottom: 20px;">
+                  <a href="#" class="auth-toggle-link" style="margin-top:0; font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:6px;">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    View Full Quote Document
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Approve/Reject buttons side by side -->
+            <div style="display:flex; gap:12px; margin-bottom: 20px;">
+              <button class="btn-select-approve" id="btn-approve-rfq" style="flex:1;">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Approve
+              </button>
+              <button class="btn-select-approve" id="btn-reject-rfq" style="flex:1; background-color:var(--danger); border-color:var(--danger);">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                Reject
+              </button>
+            </div>
+
+            <!-- Certified Facility photo mockup panel -->
+            <div class="card" style="padding:0; overflow:hidden;">
+              <div class="stamp-image-container" style="height:150px; background-color:#1e293b; color:#fff; position:relative; flex-direction:column; justify-content:flex-end; padding:20px; align-items:flex-start;">
+                <div style="position:absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.1)); z-index:1;"></div>
+                <div style="position:relative; z-index:2;">
+                  <h4 style="color:#ffffff; font-size:13.5px; font-weight:700;">Certified Facility: Global Tech HQ</h4>
+                  <span style="color:rgba(255,255,255,0.7); font-size:11px; display:block; margin-top:2px;">Last inspection: Sept 2024 • Grade A</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 7. PURCHASE ORDER VIEW -->
+      <section id="section-po" class="page-section">
+        
+        <div class="po-document-box">
+          
+          <div class="po-header-section">
+            <div>
+              <h2 style="font-size:18px; font-weight:700;">PO #8842-VB-2023</h2>
+              <p style="font-size:12px; color:var(--text-secondary); margin-top:2px;">Created on Oct 24, 2023</p>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center;">
+              <button class="btn-select" style="width:auto; font-size:12px; padding:6px 12px; display:inline-flex; align-items:center; gap:4px;">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download PDF
+              </button>
+              <button class="btn-select" style="width:auto; font-size:12px; padding:6px 12px; display:inline-flex; align-items:center; gap:4px;">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                Print
+              </button>
+              <button class="btn-select" style="width:auto; font-size:12px; padding:6px 12px; display:inline-flex; align-items:center; gap:4px;">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                Email Invoice
+              </button>
+            </div>
+          </div>
+
+          <div class="po-address-grid">
+            <div>
+              <div class="address-label">FROM: YOUR ORGANIZATION</div>
+              <div class="address-org">VendorBridge Logistics Corp.</div>
+              <p class="address-details">
+                451 Procurement Way, Suite 200<br>
+                Austin, TX 78701, USA<br>
+                Contact: logistics@vendorbridge.com
+              </p>
+            </div>
+            <div>
+              <div class="address-label">TO: VENDOR DETAILS</div>
+              <div class="address-org" id="po-to-org">Summit Precision Electronics</div>
+              <p class="address-details" id="po-to-address">
+                1280 Industrial Park Drive<br>
+                San Jose, CA 95110, USA<br>
+                VAT ID: US88392011
+              </p>
+            </div>
+          </div>
+
+          <div class="po-meta-row">
+            <div class="po-meta-block">
+              <div class="po-meta-label">PO Date</div>
+              <div class="po-meta-value" id="po-meta-date">Oct 24, 2023</div>
+            </div>
+            <div class="po-meta-block">
+              <div class="po-meta-label">Invoice Date</div>
+              <div class="po-meta-value" id="po-meta-inv-date">Oct 25, 2023</div>
+            </div>
+            <div class="po-meta-block">
+              <div class="po-meta-label">Due Date</div>
+              <div class="po-meta-value" id="po-meta-due-date">Nov 24, 2023</div>
+            </div>
+            <div class="po-meta-block">
+              <div class="po-meta-label">Payment Terms</div>
+              <div class="po-meta-value" id="po-meta-terms">Net 30 Days</div>
+            </div>
+          </div>
+
+          <!-- Items Table -->
+          <div class="table-container">
+            <table class="vb-table">
+              <thead>
+                <tr>
+                  <th style="padding:10px 12px; background-color:#f8fafc;">Item Description</th>
+                  <th style="padding:10px 12px; background-color:#f8fafc; text-align:center;">Qty</th>
+                  <th style="padding:10px 12px; background-color:#f8fafc; text-align:right;">Unit Price</th>
+                  <th style="padding:10px 12px; background-color:#f8fafc; text-align:right;">Total</th>
+                </tr>
+              </thead>
+              <tbody id="po-items-tbody">
+                <tr>
+                  <td>
+                    <span style="font-weight:600; display:block;">Precision Control Board - V2</span>
+                    <span style="font-size:11px; color:var(--text-muted);">Part #SP-102-PCB</span>
+                  </td>
+                  <td style="text-align:center;">50</td>
+                  <td style="text-align:right;">$1,200.00</td>
+                  <td style="text-align:right; font-weight:600;">$60,000.00</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span style="font-weight:600; display:block;">Industrial Capacitors (Bulk)</span>
+                    <span style="font-size:11px; color:var(--text-muted);">Part #CAP-400-IND</span>
+                  </td>
+                  <td style="text-align:center;">200</td>
+                  <td style="text-align:right;">$45.00</td>
+                  <td style="text-align:right; font-weight:600;">$9,000.00</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span style="font-weight:600; display:block;">High-Temp Heat Sinks</span>
+                    <span style="font-size:11px; color:var(--text-muted);">Part #HS-TH-90</span>
+                  </td>
+                  <td style="text-align:center;">100</td>
+                  <td style="text-align:right;">$28.50</td>
+                  <td style="text-align:right; font-weight:600;">$2,850.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Invoice summary breakdowns -->
+          <div class="invoice-summary-block">
+            <table class="invoice-summary-table">
+              <tr>
+                <td style="color:var(--text-secondary);">Subtotal</td>
+                <td style="text-align:right; font-weight:600;" id="po-subtotal">$71,850.00</td>
+              </tr>
+              <tr>
+                <td style="color:var(--text-secondary);">CGST (9%)</td>
+                <td style="text-align:right; font-weight:600;" id="po-cgst">$6,466.50</td>
+              </tr>
+              <tr>
+                <td style="color:var(--text-secondary);">SGST (9%)</td>
+                <td style="text-align:right; font-weight:600;" id="po-sgst">$6,466.50</td>
+              </tr>
+              <tr class="invoice-grand-total">
+                <td style="padding-top:14px; font-weight:700; color:var(--sidebar-bg);">Grand Total</td>
+                <td style="text-align:right; padding-top:14px; font-size:22px; font-weight:700; color:var(--sidebar-bg);" id="po-grand-total">$84,783.00</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Bottom interactive elements -->
+          <div style="border-top:1px solid var(--border-color); padding-top:20px; margin-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div style="display:flex; gap:10px;">
+              <button class="btn-select" id="btn-pending-payment" style="width:auto; font-size:12px; color:var(--warning); border-color:var(--warning); font-weight:600; display:inline-flex; align-items:center; gap:4px; background:rgba(245,158,11,0.05);">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                Pending Payment
+              </button>
+              <button class="btn-select-approve" id="btn-mark-paid" style="width:auto; font-size:12px; padding:6px 12px; font-weight:600; display:inline-flex; align-items:center; gap:4px;">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Mark as Paid
+              </button>
+            </div>
+            <span style="font-size:11.5px; color:var(--text-muted); font-style:italic;">* Please include PO Number in all transaction references.</span>
+          </div>
+
+        </div>
+
+        <!-- Shipment instructions and Stamp Grid -->
+        <div style="display:grid; grid-template-columns:1.3fr 1fr; gap:24px; margin-top:24px;">
+          <div class="card">
+            <h3 style="font-size:13px; font-weight:600; text-transform:uppercase; color:var(--text-secondary); margin-bottom:10px; letter-spacing:0.5px;">Shipment Instructions</h3>
+            <p style="font-size:13.5px; color:var(--text-secondary); line-height:1.55;" id="po-shipping-instructions">
+              Freight to be handled via BlueStar Logistics. Delivery window: 09:00 - 16:00 Mon-Fri. Warehouse Gate 4.
+            </p>
+          </div>
+          <div class="card" style="padding:0; overflow:hidden; border-style:dashed; border-width:2px; height:150px; background-color:#fafbfc; display:flex; align-items:center; justify-content:center;">
+            <div style="width:60px; height:60px; border-radius:50%; border:4px double var(--sidebar-bg); display:flex; align-items:center; justify-content:center; color:var(--sidebar-bg); opacity:0.3; transform:rotate(-15deg);">
+              <span style="font-size:10px; font-weight:900; letter-spacing:1px; text-transform:uppercase;">SEAL</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- 8. INVOICES SCREEN -->
+      <section id="section-invoices" class="page-section">
+        <div class="card">
+          <div class="card-title">Invoices Audit Logs</div>
+          <div class="table-container">
+            <table class="vb-table" id="invoices-table">
+              <thead>
+                <tr>
+                  <th>Invoice Number</th>
+                  <th>PO Reference</th>
+                  <th>Vendor Partner</th>
+                  <th>Value</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Loaded dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. REPORTS SCREEN -->
+      <section id="section-reports" class="page-section">
+        <div class="card">
+          <div class="card-title">General Spending Analytics Overview</div>
+          <p style="color:var(--text-secondary); font-size:13.5px;">Click on the "Spending Trends" card on the Dashboard to see dynamic expense visualizations.</p>
+        </div>
+      </section>
+
+      <!-- 10. ACTIVITY SCREEN -->
+      <section id="section-activity" class="page-section">
+        <div class="card">
+          <div class="card-title">System Audit Log Trail</div>
+          <div class="approval-chain-timeline" id="activities-timeline" style="margin-left:24px;">
+            <!-- Dynamic timeline items -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- FLOATING CHAT HELPER -->
+  <div class="chat-helper-bubble" id="btn-chat-helper" title="Open Chat Feed">
+    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+  </div>
+
+  <!-- TOAST ALERTS -->
+  <div id="toast-container"></div>
+
+  <!-- ADD VENDOR MODAL -->
+  <div id="add-vendor-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Add New Vendor</h3>
+        <button class="modal-close" id="btn-close-add-vendor-modal">&times;</button>
+      </div>
+      <form id="add-vendor-form">
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="add-vendor-name">Vendor Name*</label>
+            <input type="text" id="add-vendor-name" class="form-input" required placeholder="e.g. Apex Logistics Corp">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="add-vendor-category">Category*</label>
+            <input type="text" id="add-vendor-category" class="form-input" required placeholder="e.g. Logistics">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="add-vendor-gst">GST Number*</label>
+            <input type="text" id="add-vendor-gst" class="form-input" required placeholder="e.g. 27AABCS1429Bz0">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="add-vendor-phone">Contact Number*</label>
+            <input type="text" id="add-vendor-phone" class="form-input" required placeholder="e.g. +91 98765 43210">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="add-vendor-email">Email Address</label>
+            <input type="email" id="add-vendor-email" class="form-input" placeholder="e.g. contact@vendor.com">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="add-vendor-status">Status</label>
+            <select id="add-vendor-status" class="form-input" style="height: 42px;">
+              <option value="Active">Active</option>
+              <option value="Pending">Pending</option>
+              <option value="Blocked">Blocked</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="add-vendor-address">Address</label>
+            <input type="text" id="add-vendor-address" class="form-input" placeholder="e.g. New Delhi, India">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-select" id="btn-cancel-add-vendor" style="width: auto; min-width: 100px; background: #f1f5f9; color: #475569; border-color: #e2e8f0;">Cancel</button>
+          <button type="submit" class="btn-select-approve" style="width: auto; min-width: 100px; background: #10b981; border-color: #10b981;">Save Vendor</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- VIEW VENDOR MODAL -->
+  <div id="view-vendor-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="view-vendor-title">Vendor Details</h3>
+        <button class="modal-close" id="btn-close-view-vendor-modal">&times;</button>
+      </div>
+      <div class="modal-body" style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px;">
+          <div style="width: 50px; height: 50px; border-radius: 50%; background: #f1f5f9; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: var(--sidebar-bg);" id="view-vendor-avatar">
+            V
+          </div>
+          <div>
+            <h4 style="font-size: 18px; font-weight: 600;" id="view-vendor-name">Vendor Name</h4>
+            <span style="font-size: 12px; color: var(--text-muted);" id="view-vendor-id">ID: VND-XXXX</span>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div>
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Category</span>
+            <span style="font-weight: 500;" id="view-vendor-cat">Category</span>
+          </div>
+          <div>
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Status</span>
+            <span class="status-tag" id="view-vendor-status-badge">Status</span>
+          </div>
+          <div>
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">GST Number</span>
+            <span style="font-family: monospace;" id="view-vendor-gst-no">GST no</span>
+          </div>
+          <div>
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Contact Number</span>
+            <span id="view-vendor-phone-no">Contact no</span>
+          </div>
+          <div>
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Email Address</span>
+            <span id="view-vendor-email-id">Email</span>
+          </div>
+          <div>
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Performance Rating</span>
+            <span style="font-weight: 600; color: #10b981;" id="view-vendor-performance-val">90%</span>
+          </div>
+        </div>
+        <div style="border-top: 1px solid var(--border-color); padding-top: 16px;">
+          <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Address</span>
+          <p id="view-vendor-address-details" style="font-size: 13px; color: var(--text-secondary);">Address info</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-select" id="btn-close-view-vendor" style="width: auto; min-width: 100px;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ASSIGN VENDOR TO RFQ MODAL -->
+  <div id="assign-vendor-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Assign Vendor</h3>
+        <button class="modal-close" id="btn-close-assign-vendor-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="assign-vendor-select">Select a vendor from the active partners:</label>
+          <select id="assign-vendor-select" class="form-input" style="height: 42px;">
+            <!-- Loaded dynamically in app.js -->
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-select" id="btn-cancel-assign-vendor" style="width: auto; min-width: 100px; background: #f1f5f9; color: #475569; border-color: #e2e8f0;">Cancel</button>
+        <button type="button" class="btn-select-approve" id="btn-confirm-assign-vendor" style="width: auto; min-width: 100px;">Assign</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOAD APPLICATION SCRIPTS -->
+  <script src="mockData.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
